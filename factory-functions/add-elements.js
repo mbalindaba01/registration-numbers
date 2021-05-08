@@ -3,6 +3,7 @@ const AddElements = () => {
     let createdElem
     let appendParent
     let regNames = []
+    let elemArray = []
 
     const setReg = (num) => {
         regNum = num.toUpperCase().replace(/ /g,'')
@@ -34,6 +35,14 @@ const AddElements = () => {
         createdElem.innerHTML = getReg()
     }
 
+    const setElemArray = () => {
+        elemArray.push(createdElem)
+    }
+
+    const getElemArray = () => {
+        return elemArray
+    }
+
     const setRegArray = () => {
         regNames.push(regNum)
     }
@@ -50,6 +59,8 @@ const AddElements = () => {
         setParent,
         getParent,
         appendChildToParent, 
+        setElemArray,
+        getElemArray,
         setRegArray, 
         getRegArray
     }
