@@ -13,6 +13,9 @@ const removeButton = document.querySelector('#remove')
 //reference to the error div
 const error = document.querySelector('.error')
 
+//reference to the radio buttons
+const radioBtns = document.querySelectorAll('input[name ="town"]')
+
 //instance of factory function that creates and appends elements
 const addElements = AddElements()
 
@@ -28,7 +31,7 @@ const addReg = () => {
         if(!addElements.getRegArray().includes(addElements.getReg())){
             addElements.appendChildToParent()  
         }
-        addElements.setRegArray()    
+        addElements.setRegArray()
         addElements.setElemArray()
     }
     else {
@@ -43,7 +46,7 @@ const addReg = () => {
 //remove items that are not from the selected town
 const removeReg = () => {
     //init variable to store reg code of the selected town
-    let regCode
+    let regCode = ''
 
     //ref to radio button
     const radioRegBtn = document.querySelector('[name="town"]:checked')
@@ -69,13 +72,18 @@ const removeReg = () => {
         regCode = 'CY'
     }
 
+    let result = addElements.getElemArray().filter(e => e.textContent.startsWith(regCode))
+    console.log(result)
     //find all created elements whose text content does not start with the reg code and remove them
-    for(let i = 0; i < addElements.getElemArray().length; i++){
+    for(let i = 0; i < addElements.getElemArray().length; i++) {
         let town = addElements.getElemArray()[i]
-        if(!town.textContent.startsWith(regCode) && theTown != undefined){
+        if(result.length == 0){
+            error.innerHTML = 'None of the registration numbers are from ' + removeElements.getTownReg()
+            return
+        }
+        if(!town.textContent.startsWith(regCode)) {
+            console.log(regCode)
             regParent.removeChild(town)
-        }else {
-            console.log('Haibo Wenzani')
         }
     }
 
@@ -108,4 +116,11 @@ addButton.addEventListener('click', () => {
 })
 
 //event listener to remove button
-removeButton.addEventListener('click', removeReg)
+removeButton.addEventListener('click', () => {
+    removeReg()
+
+    //clear selected radio button
+    for(let i = 0; i < radioBtns.length; i++){
+        radioBtns[i].checked = false
+    }
+})
