@@ -7,7 +7,6 @@ const AddElements = () => {
 
     const setReg = (num) => {
         regNum = num.toUpperCase().replace(/ /g,'')
-
     }
 
     const getReg = () => {
@@ -33,6 +32,7 @@ const AddElements = () => {
     const appendChildToParent = () => {
         appendParent.appendChild(createdElem)
         createdElem.innerHTML = getReg()
+        getParent().insertBefore(getRegElem(), getParent().childNodes[0])
     }
 
     const setElemArray = () => {

@@ -116,8 +116,10 @@ input#remove {
 .error {
     position: absolute;
     top: 0;
-    max-width: 250px;
+    width: 60%;
+    min-width: 250px;
     background: red;
+    text-align: center;
 }
 
 ::placeholder {
@@ -131,7 +133,7 @@ input#remove {
     }
 }
 
-@media screen and (max-width: 768px){
+@media screen and (max-width: 450px){
     .radio-btns {
         flex-direction: column;
         align-items: flex-start;

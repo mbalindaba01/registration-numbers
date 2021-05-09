@@ -25,6 +25,14 @@ const removeElements = RemoveElements()
 //add the reg number to the DOM
 const addReg = () => {
     addElements.setReg(inputReg.value)
+    let digits = addElements.getReg().slice(2, addElements.getReg().length)
+    if(!digits.match("^[0-9]+$") || addElements.getReg().length > 10) {
+        error.innerHTML = 'Please enter valid registration number'
+        setTimeout(() => {
+            error.innerHTML = ""
+        }, 3000);
+        return
+    }
     if(addElements.getReg().startsWith('CA') || addElements.getReg().startsWith('CY') || addElements.getReg().startsWith('CJ')){
         addElements.createRegElem('h2')
         addElements.setParent(regParent) 
@@ -79,11 +87,14 @@ const removeReg = () => {
         let town = addElements.getElemArray()[i]
         if(result.length == 0){
             error.innerHTML = 'None of the registration numbers are from ' + removeElements.getTownReg()
-            return
+            setTimeout(() => {
+                error.innerHTML = ""
+            }, 3000);
         }
         if(!town.textContent.startsWith(regCode)) {
-            console.log(regCode)
-            regParent.removeChild(town)
+            addElements.setParent(regParent)
+            addElements.getParent().removeChild(town)
+            console.log(addElements.getParent())
         }
     }
 
