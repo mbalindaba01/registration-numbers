@@ -25,6 +25,7 @@ const removeElements = RemoveElements()
 //add the reg number to the DOM
 const addReg = () => {
     addElements.setReg(inputReg.value)
+    //error when reg number is invalid
     let digits = addElements.getReg().slice(2, addElements.getReg().length)
     if(!digits.match("^[0-9]+$") || addElements.getReg().length > 10) {
         error.innerHTML = 'Please enter valid registration number'
@@ -33,6 +34,8 @@ const addReg = () => {
         }, 3000);
         return
     }
+
+    //add reg number to DOM
     if(addElements.getReg().startsWith('CA') || addElements.getReg().startsWith('CY') || addElements.getReg().startsWith('CJ')){
         addElements.createRegElem('h2')
         addElements.setParent(regParent) 
@@ -42,13 +45,13 @@ const addReg = () => {
         addElements.setRegArray()
         addElements.setElemArray()
     }
-    else {
+    //error when reg number is not from Cape Town, Bellville or Paarl
+    else { 
         error.innerHTML = "Please provide a Cape Town, Bellville or Paarl Registration Number"
         setTimeout(() => {
             error.innerHTML = ""
         }, 3000)
     }
-
 }
 
 //remove items that are not from the selected town
@@ -94,7 +97,6 @@ const removeReg = () => {
         if(!town.textContent.startsWith(regCode)) {
             addElements.setParent(regParent)
             addElements.getParent().removeChild(town)
-            console.log(addElements.getParent())
         }
     }
 
