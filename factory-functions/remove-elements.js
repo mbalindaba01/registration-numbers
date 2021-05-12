@@ -1,15 +1,6 @@
 const RemoveElements = () => {
-    let selectedTowns
-    let townReg 
-    let removedReg = []
-
-    const setTownList = (towns) => {
-        selectedTowns = towns
-    }
-
-    const getTownList = () => {
-        return selectedTowns
-    }
+    let townReg
+    let regCode
 
     const setTownReg = (reg) => {
         townReg = reg
@@ -19,15 +10,29 @@ const RemoveElements = () => {
         return townReg
     }
 
-    const removeReg = (elem) => {
-        removedReg = document.removeChild(elem)
+    const setRegCode = (town) => {
+        if(town == "Cape Town") {
+            regCode = "CA"
+        }else if(town == "Bellville"){
+            regCode = "CJ"
+        } else if(town = "Paarl") {
+            regCode = "CY"
+        }
+    }
+
+    const getRegCode = () => {
+        return regCode
+    }
+
+    const removeElements = (appendParent, child) => {
+        appendParent.removeChild(child)
     }
 
     return {
-        setTownList,
-        getTownList,
         setTownReg,
         getTownReg,
-        removeReg
+        setRegCode,
+        getRegCode,
+        removeElements,
     }
 }

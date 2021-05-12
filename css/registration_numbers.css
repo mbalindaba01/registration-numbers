@@ -116,10 +116,13 @@ input#remove {
 .error {
     position: absolute;
     top: 0;
-    width: 60%;
-    min-width: 250px;
+    width: 30%;
     background: red;
+    color: #eee;
     text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 ::placeholder {
@@ -128,7 +131,7 @@ input#remove {
 }
 
 @media screen and (max-width: 1200px){
-    .container {
+    .container, .error {
         width: 60%;
     }
 }
@@ -144,7 +147,8 @@ input#remove {
         align-self: flex-start;
     }
 
-    .container {
+    .container, .error {
         width: 100%;
     }
+
 }

@@ -7,7 +7,7 @@ const AddElements = () => {
 
     //set and get reg numbers
     const setReg = (num) => {
-        regNum = num.toUpperCase().replace(/ /g,'')
+        regNum = num.toUpperCase().replace(/ /g, '')
     }
 
     const getReg = () => {
@@ -33,9 +33,8 @@ const AddElements = () => {
     }
 
     //append created child to parent
-    const appendChildToParent = () => {
-        appendParent.appendChild(createdElem)
-        createdElem.innerHTML = getReg()
+    const appendChildToParent = (innerText) => {
+        createdElem.innerHTML = innerText
         getParent().insertBefore(getRegElem(), getParent().childNodes[0])
     }
 
@@ -49,7 +48,8 @@ const AddElements = () => {
     }
 
     //set and get array of registration numbers entered by user
-    const setRegArray = () => {
+    const setRegArray = (regNums) => {
+        regNames = regNums
         regNames.push(regNum)
     }
 
@@ -64,10 +64,10 @@ const AddElements = () => {
         getRegElem,
         setParent,
         getParent,
-        appendChildToParent, 
+        appendChildToParent,
         setElemArray,
         getElemArray,
-        setRegArray, 
-        getRegArray
+        setRegArray,
+        getRegArray,
     }
 }
