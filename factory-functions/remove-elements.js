@@ -15,8 +15,10 @@ const RemoveElements = () => {
             regCode = "CA"
         }else if(town == "Bellville"){
             regCode = "CJ"
-        } else if(town = "Paarl") {
+        } else if(town == "Paarl") {
             regCode = "CY"
+        } else if(town == 'All'){
+            regCode = "All"
         }
     }
 

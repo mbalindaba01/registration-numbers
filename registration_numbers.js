@@ -25,6 +25,15 @@ const removeElements = RemoveElements()
 //set parent globally so it does not get set everytime you call a function
 addElements.setParent(regParent)
 
+//initiate local storage to an empty array 
+if(localStorage.getItem('regs') == null) {
+    localStorage.setItem('regs', [])
+}
+
+//reference to reg numbers saved in local storage
+let regs = localStorage.getItem('regs').split(',')
+
+
 //function to display error
 const displayError = (errorMsg) => {
     error.innerHTML = errorMsg
@@ -45,49 +54,89 @@ const localStorageItems = () => {
             addElements.createRegElem('h2')
             addElements.getParent()
             addElements.appendChildToParent(uniqueStorageList[i])
-            addElements.setElemArray()
+            addElements.setElemArray(addElements.getRegElem())
         }
     }
-}
-
-//initiate regs array to an empty array
-if(localStorage.getItem('regs') == null) {
-    localStorage.setItem('regs', [])
 }
 
 //add the reg number to the DOM
 const addReg = () => {  
     addElements.setReg(inputReg.value)
-    //error when reg number is invalid
     let digits = addElements.getReg().slice(2, addElements.getReg().length)
-    if (!digits.match("^[0-9]+$") || addElements.getReg().length > 10) {
+    if(inputReg.value == '') {
+        displayError('Registration number cannot be empty')
+    }else if(!digits.match('^[0-9]+$') || addElements.getReg().length > 10) {
         displayError('Please enter valid registration number')
-    } else {
-        //runs when provided reg number is valid
-        if (addElements.getReg().startsWith('CA') || addElements.getReg().startsWith('CY') || addElements.getReg().startsWith('CJ')) {
-            if (!localStorage.getItem('regs').split(',').includes(addElements.getReg())) {
-                let regNames = [].concat(localStorage.getItem('regs').split(','))
-                addElements.setRegArray(regNames)
-                localStorage.setItem('regs', addElements.getRegArray())
-                addElements.createRegElem('h2')
-                addElements.getParent()
-                addElements.appendChildToParent(addElements.getReg())
-                addElements.setElemArray()
-            }else {
-                displayError("Registration number already added. Please add unique registration number")
-                return
-            }        
-        } else {
-            //error when reg number is not from Cape Town, Bellville or Paarl
-            displayError("Please provide a Cape Town, Bellville or Paarl registration number")
-            return
-        }
+    }else if(!(addElements.getReg().startsWith('CA') || addElements.getReg().startsWith('CY') || addElements.getReg().startsWith('CJ'))) {
+        displayError('Please enter Cape Town, Bellville or Paarl registration number')
+    }else if(regs.includes(addElements.getReg())) {
+        displayError('Registration number already added. Please add unique registration number')
+    }else {
+        let regNames = regs
+        addElements.setRegArray(regNames)
+        localStorage.setItem('regs', addElements.getRegArray())
+        addElements.createRegElem('h2')
+        addElements.getParent()
+        addElements.appendChildToParent(addElements.getReg())
+        addElements.setElemArray(addElements.getRegElem())
     }
 }
 
 //remove items that are not from the selected town
 const removeReg = () => {
-
+    if(addElements.getElemArray().length === 0) {
+        displayError('Please add registration numbers first')
+    } else {
+        //get ref to radio buttons
+        const radioRegBtn = document.querySelector('[name="town"]:checked')
+        if(radioRegBtn) {
+            var townName = radioRegBtn.value
+            removeElements.setTownReg(townName)
+            removeElements.setRegCode(removeElements.getTownReg())
+            //array for elements to be removed
+            let toBeRemoved = addElements.getElemArray().filter(elem => !elem.textContent.startsWith(removeElements.getRegCode()))
+            //array for elements to be left behinf
+            let toRemain = addElements.getElemArray().filter(elem => elem.textContent.startsWith(removeElements.getRegCode()))
+            //error to run if only reg numbers from a specific town are present
+            if(toBeRemoved.length === 0 && addElements.getElemArray().length !== 0){
+                displayError('Only ' + removeElements.getTownReg() + ' registration numbers are present')
+            }
+            //add class to hide elements that do not fit the filter criteria
+            for(let i = 0; i < toBeRemoved.length; i++){
+                let townRemoved = toBeRemoved[i]
+                if(removeElements.getTownReg() !== 'All'){
+                    townRemoved.classList.add('hide')
+                }
+            }
+            //remove hide class if the criteria for hiding them changes
+            for(let i = 0; i < toRemain.length; i++){
+                let elem = toRemain[i]
+                if(elem.classList.contains('hide')){
+                    elem.classList.remove('hide')
+                }
+            }
+            //remove hide class from all elements when the all radio button is chosen
+            if(removeElements.getRegCode() == 'All'){
+                for(let i = 0; i < addElements.getElemArray().length; i++){
+                    let elem = addElements.getElemArray()[i]
+                    if(elem.classList.contains('hide')){
+                        elem.classList.remove('hide')
+                    }
+                }
+            }
+            //if none of the registration numbers are from a specific town run this
+            if(addElements.getElemArray().length == toBeRemoved.length && removeElements.getRegCode() !== 'All') {
+                displayError('None of the registration numbers are from ' + removeElements.getTownReg())
+                setTimeout(() => {
+                    window.location.reload()
+                }, 1000);
+            }
+        }          
+        else {
+            displayError('Please pick a town')
+        }
+    }
+/*
     //display error if the user presses show button while there are no added registration numbers
     if (localStorage.getItem('regs').split(',').length != 0) {
         //ref to radio button
@@ -96,6 +145,11 @@ const removeReg = () => {
             var theTown = radioRegBtn.value
         } else {
             displayError('Please pick a town')
+            return
+        }
+        //show all the registration numbers if all radio button is selected
+        if(theTown == "All"){
+            window.location.reload()
             return
         }
 
@@ -113,20 +167,20 @@ const removeReg = () => {
                 addElements.getElemArray().splice(index, 1)
                 addElements.getRegArray().splice(index2, 1)
                 removeElements.removeElements(addElements.getParent(), town)
-                localStorage.setItem('regs', addElements.getRegArray())
             }
+            addElements.setRegArray(localStorage.getItem('regs').split(','))
             //error if none of the reg numbers on the DOM are from the selected town
             if(addElements.getElemArray().length == 0){
                 displayError('None of the registration numbers are from ' + removeElements.getTownReg())
             }
         }
+
     } else {
         //error when no registration numbers have been added
         displayError('Please add registration number(s) first')
     }
-    addElements.setRegArray(localStorage.getItem('regs'))
-    localStorage.setItem('regs', removeElements.getRegArray())
-
+    //reset local storage
+    console.log(addElements.getRegArray())*/
 }
 
 //event listener to make reg numbers persistent on reload
@@ -134,11 +188,7 @@ window.addEventListener('load', localStorageItems)
 
 //event listener to add button
 addButton.addEventListener('click', () => {
-    if (inputReg.value != '') {
-        addReg()
-    } else {
-        displayError('Registration Number Cannot Be Empty')
-    }
+    addReg() 
     //clear input field
     inputReg.value = ''
 })
@@ -146,7 +196,6 @@ addButton.addEventListener('click', () => {
 //event listener to remove button
 removeButton.addEventListener('click', () => {
     removeReg()
-
     //clear selected radio button
     for (let i = 0; i < radioBtns.length; i++) {
         radioBtns[i].checked = false

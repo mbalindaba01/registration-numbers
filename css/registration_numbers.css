@@ -109,6 +109,10 @@ input[type="submit"] {
     font-size: 20px;
 }
 
+.hide {
+    display: none;
+}
+
 input#remove {
     width: 250px;
 }

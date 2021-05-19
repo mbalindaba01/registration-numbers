@@ -39,8 +39,8 @@ const AddElements = () => {
     }
 
     //set and get array of existing elements before removal
-    const setElemArray = () => {
-        elemArray.push(createdElem)
+    const setElemArray = (elem) => {
+        elemArray.push(elem)
     }
 
     const getElemArray = () => {
