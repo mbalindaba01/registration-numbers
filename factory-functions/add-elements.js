@@ -4,6 +4,7 @@ const AddElements = () => {
     let appendParent
     let regNames = []
     let elemArray = []
+    let errorText 
 
     //set and get reg numbers
     const setReg = (num) => {
@@ -57,6 +58,14 @@ const AddElements = () => {
         return regNames
     }
 
+    const setError = (error) => {
+        errorText = error
+    }
+
+    const getError = () => {
+        return errorText
+    }
+
     return {
         setReg,
         getReg,
@@ -69,5 +78,7 @@ const AddElements = () => {
         getElemArray,
         setRegArray,
         getRegArray,
+        setError,
+        getError
     }
 }
