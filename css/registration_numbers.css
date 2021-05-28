@@ -102,7 +102,13 @@ input[type="radio"]{
     width: 200px;
 }
 
-
+input[type="button"]{
+    background: #001214;
+    color: #eee;
+    height: 40px;
+    font-size: 14px;
+    display: none;
+}
 
 input[type="submit"] {
     height: 40px;

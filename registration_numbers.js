@@ -10,6 +10,9 @@ const addButton = document.querySelector('#add')
 //reference to remove button
 const removeButton = document.querySelector('#remove')
 
+//reference to button to remove all elements from DOM and localStorage 
+const removeAll = document.querySelector('#removeAll')
+
 //reference to the error div
 const error = document.querySelector('.error')
 
@@ -32,8 +35,6 @@ if(localStorage.getItem('regs') == null) {
 
 //reference to reg numbers saved in local storage
 let regs = localStorage.getItem('regs').split(',')
-
-
 //function to display error
 const displayError = (errorMsg) => {
     addElements.setError(errorMsg)
@@ -60,6 +61,12 @@ const localStorageItems = () => {
     }
 }
 
+const displayRemoveButton = () => {
+    if(regs.length > 1) {
+        removeAll.style.display = 'block'
+    }
+}
+
 //add the reg number to the DOM
 const addReg = () => {  
     addElements.setReg(inputReg.value)
@@ -82,6 +89,7 @@ const addReg = () => {
         addElements.setElemArray(addElements.getRegElem())
     }
 }
+
 
 //remove items that are not from the selected town
 const removeReg = () => {
@@ -185,11 +193,15 @@ const removeReg = () => {
 }
 
 //event listener to make reg numbers persistent on reload
-window.addEventListener('load', localStorageItems)
+window.addEventListener('load', () => {
+    localStorageItems()
+    displayRemoveButton()
+})
 
 //event listener to add button
 addButton.addEventListener('click', () => {
     addReg() 
+    displayRemoveButton()
     //clear input field
     inputReg.value = ''
 })
@@ -201,6 +213,12 @@ removeButton.addEventListener('click', () => {
     for (let i = 0; i < radioBtns.length; i++) {
         radioBtns[i].checked = false
     }
+})
+
+//event listener to clear reg nums
+removeAll.addEventListener('click', () => {
+    localStorage.clear()
+    location.reload()
 })
 
 
