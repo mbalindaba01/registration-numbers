@@ -55,6 +55,7 @@ h2 {
 }
 
 .radio-btns {
+    height: 100px;
     margin-top: 10px;
     display: flex;
     justify-content: center;
@@ -68,7 +69,7 @@ h2 {
 .radio {
     display: flex;
     align-items: center;    
-    height: 30px;
+    height: 50px;
     margin-left: -30px;
 }
 

@@ -30,11 +30,21 @@ const RemoveElements = () => {
         appendParent.removeChild(child)
     }
 
+    const setError = (error) => {
+        errorText = error
+    }
+
+    const getError = () => {
+        return errorText
+    }
+
     return {
         setTownReg,
         getTownReg,
         setRegCode,
         getRegCode,
         removeElements,
+        setError,
+        getError
     }
 }

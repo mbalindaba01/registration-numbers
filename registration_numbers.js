@@ -36,7 +36,8 @@ let regs = localStorage.getItem('regs').split(',')
 
 //function to display error
 const displayError = (errorMsg) => {
-    error.innerHTML = errorMsg
+    addElements.setError(errorMsg)
+    error.innerHTML = addElements.getError()
     error.style.height = '40px'
     setTimeout(() => {
         error.innerHTML = ''
