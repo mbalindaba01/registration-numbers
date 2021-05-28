@@ -37,7 +37,7 @@ h2 {
     width: 125px;
     height: 30px;
     border: 2px solid #000;
-    border-radius: 15px;
+    border-radius: 8px;
     padding: 15px;
     margin: 10px 2px;
     text-align: center;
@@ -51,7 +51,12 @@ h2 {
 .input-fields {
     width: 250px;
     display: flex;
-    flex-direction: column;
+    align-items: center;
+}
+
+.input-fields input:nth-child(2){
+    margin: 0 0px 5px 20px;
+    width: 80px;
 }
 
 .radio-btns {
