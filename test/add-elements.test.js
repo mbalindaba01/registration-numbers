@@ -24,7 +24,7 @@ describe('AddElements function', () => {
         
     });
 
-    describe('Warning Messages', () => {
+    describe('Error Messages', () => {
         it('should display error if there is no registration number provided', () => {
             let addElements = AddElements()
 

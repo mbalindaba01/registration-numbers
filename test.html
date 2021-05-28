@@ -24,7 +24,7 @@
     <script src="./test/remove-elements.test.js"></script>
     <script>
         mocha.checkLeaks();
-        mocha.run();
+        mocha.run().globals(['errorText']);
     </script>
 </body>
 </html>
