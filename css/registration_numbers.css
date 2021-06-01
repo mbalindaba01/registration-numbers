@@ -141,6 +141,11 @@ input#remove {
     justify-content: center;
 }
 
+#example {
+    color: gray;
+    font-weight: 600;
+}
+
 ::placeholder {
     padding: 2px;
     font-size: 18px;

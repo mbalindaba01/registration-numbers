@@ -15,29 +15,8 @@ const AddElements = () => {
         return regNum
     }
 
-    //create and get created element
-    const createRegElem = (elem) => {
-        createdElem = document.createElement(elem)
-    }
-
-    const getRegElem = () => {
-        return createdElem
-    }
-
-    //set and get parent element
-    const setParent = (parent) => {
-        appendParent = parent
-    }
-
-    const getParent = () => {
-        return appendParent
-    }
-
-    //append created child to parent
-    const appendChildToParent = (innerText) => {
-        createdElem.innerHTML = innerText
-        getParent().insertBefore(getRegElem(), getParent().childNodes[0])
-    }
+    //set element 
+    
 
     //set and get array of existing elements before removal
     const setElemArray = (elem) => {
@@ -69,11 +48,6 @@ const AddElements = () => {
     return {
         setReg,
         getReg,
-        createRegElem,
-        getRegElem,
-        setParent,
-        getParent,
-        appendChildToParent,
         setElemArray,
         getElemArray,
         setRegArray,

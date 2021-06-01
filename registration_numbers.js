@@ -25,9 +25,6 @@ const addElements = AddElements()
 //instance of factory function that removes elements
 const removeElements = RemoveElements()
 
-//set parent globally so it does not get set everytime you call a function
-addElements.setParent(regParent)
-
 //initiate local storage to an empty array 
 if(localStorage.getItem('regs') == null) {
     localStorage.setItem('regs', [])
@@ -53,10 +50,10 @@ const localStorageItems = () => {
     let uniqueStorageList = [... new Set(storageList)]
     for(let i = 1; i < uniqueStorageList.length; i++){
         if(uniqueStorageList.length != 0){
-            addElements.createRegElem('h2')
-            addElements.getParent()
-            addElements.appendChildToParent(uniqueStorageList[i])
-            addElements.setElemArray(addElements.getRegElem())
+            let createdElem = document.createElement('h2')
+            regParent.appendChild(createdElem)
+            createdElem.innerHTML = uniqueStorageList[i]
+            addElements.setElemArray('h2')
         }
     }
 }
@@ -83,10 +80,10 @@ const addReg = () => {
         let regNames = regs
         addElements.setRegArray(regNames)
         localStorage.setItem('regs', addElements.getRegArray())
-        addElements.createRegElem('h2')
-        addElements.getParent()
-        addElements.appendChildToParent(addElements.getReg())
-        addElements.setElemArray(addElements.getRegElem())
+        let createdElem = document.createElement('h2')
+        createdElem.innerHTML = addElements.getReg()
+        regParent.appendChild(createdElem)
+        addElements.setElemArray(createdElem)
     }
 }
 
@@ -103,6 +100,7 @@ const removeReg = () => {
             removeElements.setTownReg(townName)
             removeElements.setRegCode(removeElements.getTownReg())
             //array for elements to be removed
+            console.log(addElements.getElemArray())
             let toBeRemoved = addElements.getElemArray().filter(elem => !elem.textContent.startsWith(removeElements.getRegCode()))
             //array for elements to be left behinf
             let toRemain = addElements.getElemArray().filter(elem => elem.textContent.startsWith(removeElements.getRegCode()))
